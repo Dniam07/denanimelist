@@ -12,9 +12,12 @@ const Search = () => {
     const fetchResults = async () => {
       if (query.length > 0) {
         try {
+          // Add your fetching logic here if needed
         } catch (error) {
           console.error('Error fetching search results', error);
         }
+      } else {
+        router.push('/');
       }
     };
 
@@ -23,31 +26,30 @@ const Search = () => {
       if (query.length > 0) {
         router.push(`/search/${query}`);
       }
-    }, 300); // Menambahkan penundaan untuk debounce
+    }, 300); // Adding delay for debounce
 
     return () => clearTimeout(delayDebounceFn);
   }, [query, router]);
 
   return (
     <div className="relative text-gray-600 w-full sm:w-auto">
-      <input
-        type="search"
-        name="search"
-        placeholder="Search"
-        className="bg-white h-10 px-5 pr-10 rounded-full text-sm w-full sm:w-64 focus:outline-none"
-        ref={searchRef}
-        onChange={(e) => setQuery(e.target.value)} // Memperbarui query untuk memicu useEffect
-      />
-      <button
-        type="submit"
-        className="absolute right-0 top-0 mt-2.5 mr-4"
-        onClick={(e) => {
-          e.preventDefault();
-          router.push(`/search/${query}`);
-        }}
-      >
-        <FaMagnifyingGlass />
-      </button>
+      <form >
+        <input
+          type="search"
+          name="search"
+          placeholder="Search"
+          className="bg-white h-10 px-5 pr-10 rounded-full text-sm w-full sm:w-64 focus:outline-none"
+          ref={searchRef}
+          value={query}
+          onChange={(e) => setQuery(e.target.value)} // Update query to trigger useEffect
+        />
+        <button
+          type="submit"
+          className="absolute right-0 top-0 mt-2.5 mr-4"
+        >
+          <FaMagnifyingGlass />
+        </button>
+      </form>
     </div>
   );
 };
