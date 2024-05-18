@@ -1,29 +1,37 @@
+import Link from 'next/link';
 import React from 'react';
 
-const Card = () => {
-  return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg bg-white">
-      <img className="w-full" src="https://via.placeholder.com/350x150" alt="Card" />
-      <div className="px-6 py-4">
-        <div className="font-bold text-xl mb-2">Card Title</div>
-        <p className="text-gray-700 text-base">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nec velit nec nulla
-          consequat tincidunt.
-        </p>
-      </div>
-      <div className="px-6 py-4">
-        <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
-          #tag1
-        </span>
-        <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
-          #tag2
-        </span>
-        <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">
-          #tag3
-        </span>
-      </div>
-    </div>
-  );
+const Card = async ({
+    api
+}) => {
+
+    console.log(api)
+
+    return (
+        <>
+            {api.data.map((topAnime) => {
+                return (
+                    <Link href={`/${topAnime.mal_id}`}>
+                        <div className="w-full sm:w-1/2 md:w-64 md:h-96 rounded overflow-hidden shadow-lg bg-white flex flex-col hover:scale-105 transition ease-in-out duration-300">
+                            <div
+                                className="w-full h-48 md:h-1/2 bg-cover bg-center"
+                                style={{ backgroundImage: `url(${topAnime.images.jpg.image_url})` }}
+                            ></div>
+                            <div className="px-6 py-4 flex-1 flex flex-col justify-between items-center">
+                                <div className="font-bold text-lg md:text-xl mb-2 text-center">{topAnime.title}</div>
+                                <p className="text-gray-700 text-base text-center">
+                                    {topAnime.status}
+                                </p>
+                            </div>
+                        </div>
+
+                    </Link>
+
+                )
+            })}
+
+        </>
+    );
 };
 
 export default Card;
